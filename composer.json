@@ -1,0 +1,15 @@
+{
+  "name": "toko/mvc-php",
+  "autoload": {
+    "psr-4": {
+      "app\\": "./"
+    }
+  },
+  "authors": [
+    {
+      "name": "Tornike-max",
+      "email": "84152983+Tornike-max@users.noreply.github.com"
+    }
+  ],
+  "require": {}
+}
