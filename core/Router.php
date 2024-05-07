@@ -29,22 +29,25 @@ class Router
     public function resolve()
     {
         $path = $this->request->getPath();
-        $method = $this->request->getMethod();
+        $method = $this->request->method();
         $callback = $this->routes[$method][$path] ?? false;
 
         if ($callback === false) {
             $this->response->setStatusCode(404);
-            return $this->renderView('_404');
+            return $this->renderView('_404', []);
         }
 
         if (is_string($callback)) {
-            return $this->renderView($callback);
+            return $this->renderView($callback, []);
         }
 
         if (is_array($callback)) {
-            $callback[0] = new $callback[0]();
+            var_dump($callback[0]);
+            Application::$app->controller = new $callback[0]();
+            $callback[0] = Application::$app->controller;
         }
-        return call_user_func($callback);
+
+        return call_user_func($callback, $this->request);
     }
 
     public function renderView($view, $params)
@@ -52,13 +55,16 @@ class Router
         $layoutContent = $this->layoutContent();
         $viewContent = $this->renderOnlyView($view, $params);
 
+
         return str_replace('{{content}}', $viewContent, $layoutContent);
     }
 
     public function layoutContent()
     {
+        $layout = Application::$app->controller->layout;
+
         ob_start();
-        include_once Application::$ROOT_DIR . "views/layouts/mainLayout.php";
+        include_once Application::$ROOT_DIR . "views/layouts/$layout.php";
         return ob_get_clean();
     }
 
