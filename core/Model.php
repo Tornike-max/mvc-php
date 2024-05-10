@@ -12,6 +12,7 @@ abstract class Model
 
     public function loadData($data)
     {
+
         foreach ($data as $key => $value) {
             if (property_exists($this, $key)) {
                 $this->{$key} = $value;
@@ -33,7 +34,6 @@ abstract class Model
 
                 $ruleName = $rule;
 
-
                 if (!is_string($ruleName)) {
                     $ruleName = $rule[0];
                 }
@@ -54,7 +54,7 @@ abstract class Model
                     $this->addError($attribute, self::RULE_MAX, $rule);
                 }
 
-                if ($ruleName === self::RULE_MATCH && $value !== $rule['match']) {
+                if ($ruleName === self::RULE_MATCH && $value !== $this->{$rule['match']}) {
                     $this->addError($attribute, self::RULE_MATCH, $rule);
                 }
             }
@@ -78,8 +78,18 @@ abstract class Model
             self::RULE_EMAIL => "This Field Must Be Valid Email Address",
             self::RULE_MIN => "Min length of this field must be {min}",
             self::RULE_MAX => "Max length of this field must be {max}",
-            self::RULE_MATCH => "This field must be the same ad {match}",
+            self::RULE_MATCH => "This field must be the same as {match}",
 
         ];
+    }
+
+    public function hasError($attribute)
+    {
+        return $this->errors[$attribute] ?? false;
+    }
+
+    public function getFirstError($attribute)
+    {
+        return $this->errors[$attribute][0] ?? false;
     }
 }

@@ -22,11 +22,10 @@ class AuthController extends Controller
 
             $registerModel->loadData($request->getBody());
 
-
             if ($registerModel->validate() && $registerModel->register()) {
+
                 return 'success';
             }
-
 
             return $this->render('register', [
                 'model' => $registerModel
@@ -35,7 +34,7 @@ class AuthController extends Controller
         $this->setLayout('auth');
 
         return $this->render('register',  [
-            'model' => $registerModel
+            'model' => $registerModel,
         ]);
     }
 }

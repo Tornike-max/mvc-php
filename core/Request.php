@@ -24,7 +24,6 @@ class Request
 
     public function isGet()
     {
-
         return $this->method() === 'get';
     }
 
@@ -47,6 +46,9 @@ class Request
                 $body[$key] = filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS);
             }
         }
+
+        // var_dump($body);
+
 
         return $body;
     }
