@@ -20,9 +20,5 @@ abstract class DbModel extends Model
             $statement->bindValue(":$attribute", $this->{$attribute});
         };
         $statement->execute();
-
-        // echo '<pre>';
-        // var_dump($statement, $tableName, $attributes);
-        // echo '</pre>';
     }
 }
