@@ -2,6 +2,10 @@
 
 use app\core\Application;
 
+echo '<pre>';
+var_dump(Application::$app->user);
+echo '</pre>';
+
 ?>
 
 
@@ -28,6 +32,8 @@ use app\core\Application;
                     <li class="nav-item">
                         <a class="nav-link" href="/contact">Contact</a>
                     </li>
+                </ul>
+                <?php if (!Application::isGuest()) : ?>
                     <ul class="navbar-nav mr-auto mb-2 mb-lg-0">
                         <li class="nav-item">
                             <a class="nav-link" href="/register">Register</a>
@@ -36,13 +42,23 @@ use app\core\Application;
                             <a class="nav-link" href="/login">Login</a>
                         </li>
                     </ul>
+                <?php endif; ?>
 
-                </ul>
+                <?php if (Application::isGuest()) : ?>
+                    <ul class="navbar-nav mr-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <?php echo Application::$app->user->getDisplayName() ?? '' ?>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/logout">Logout</a>
+                        </li>
+                    </ul>
+                <?php endif; ?>
             </div>
         </div>
     </nav>
     <div class="container">
-        <?php if (Application::$app->session->getFlash('success')) : ?>
+        <?php if (Application::isGuest()) : ?>
             <div class="alert alert-success">
                 <?php echo Application::$app->session->getFlash('success') ?>
             </div>

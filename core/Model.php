@@ -23,6 +23,17 @@ abstract class Model
 
     abstract function rules(): array;
 
+    public function labels(): array
+    {
+        return [
+            'firstname' => 'First Name',
+            'lastname' => 'Last Name',
+            'email' => 'Email',
+            'password' => 'Password',
+            'confirmPassword' => 'Confirm Password',
+        ];
+    }
+
     public array $errors = [];
 
     public function validate()
@@ -75,12 +86,17 @@ abstract class Model
         return empty($this->errors);
     }
 
-    public function addError(string $attribute, string $rule, $params = [])
+    private function addError(string $attribute, string $rule, $params = [])
     {
         $message = $this->errorMessages()[$rule] ?? '';
         foreach ($params as $key => $value) {
             $message = str_replace("{{$key}", $value, $message);
         }
+        $this->errors[$attribute][] = $message;
+    }
+
+    public function addSingleError(string $attribute, $message)
+    {
         $this->errors[$attribute][] = $message;
     }
 

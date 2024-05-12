@@ -1,7 +1,5 @@
 <h1>Register</h1>
 
-
-
 <?php $form = \app\core\form\Form::begin('', 'post') ?>
 <div class="row">
     <div class="col">
