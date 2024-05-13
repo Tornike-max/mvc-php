@@ -24,7 +24,8 @@ echo '</pre>';
         <div class="container-fluid">
             <a class="navbar-brand" href="/">Navbar</a>
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div style='display:flex; align-items: center; justify-content:space-between;' class="collapse navbar-collapse" id="navbarSupportedContent">
+
                 <ul class="navbar-nav mr-auto mb-2 mb-lg-0">
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="/">Home</a>
@@ -34,7 +35,7 @@ echo '</pre>';
                     </li>
                 </ul>
                 <?php if (!Application::isGuest()) : ?>
-                    <ul class="navbar-nav mr-auto mb-2 mb-lg-0">
+                    <ul style="display: flex; align-items:center;" class="navbar-nav mr-auto mb-2 mb-lg-0">
                         <li class="nav-item">
                             <a class="nav-link" href="/register">Register</a>
                         </li>
@@ -45,11 +46,14 @@ echo '</pre>';
                 <?php endif; ?>
 
                 <?php if (Application::isGuest()) : ?>
-                    <ul class="navbar-nav mr-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
+                    <ul style="display: flex; align-items:center;" class="navbar-nav mr-auto mb-2 mb-lg-0">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="/profile">Profile</a>
+                        </li>
+                        <li class="nav-item active">
                             <?php echo Application::$app->user->getDisplayName() ?? '' ?>
                         </li>
-                        <li class="nav-item">
+                        <li style="margin-left: 10px;" class="nav-item active">
                             <a class="nav-link" href="/logout">Logout</a>
                         </li>
                     </ul>
